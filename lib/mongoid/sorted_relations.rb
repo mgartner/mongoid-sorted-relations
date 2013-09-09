@@ -20,7 +20,7 @@ module Mongoid
 
     def sorted_relation(relation)
       if not @cache_sorted_documents[relation.name]
-        documents = self.send(relation.name).sort_by { |x| @cache_sorted_ids[relation.key].index(x.id.to_s) }
+        documents = self.send(relation.name).sort_by { |x| @cache_sorted_ids[relation.key].index(x.id.to_s) || Float::INFINITY }
         @cache_sorted_documents[relation.name] = Mongoid::FakeCriteria.new(documents)
       end
 
